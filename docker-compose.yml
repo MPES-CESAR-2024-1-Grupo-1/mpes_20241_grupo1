@@ -1,0 +1,45 @@
+services:
+  backend_mpes:
+    container_name: app_flask_mpes
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - 8090:5000
+    networks:
+      - network_mpes
+  
+  # POSTGRES
+  db_mpes:
+    image: postgres
+    container_name: db_postgres_mpes
+    # restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: db_mpes
+    networks:
+      - network_mpes
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/pgdata:/var/lib/postgresql/data
+    
+  dbeaver_mpes:
+    container_name: dbeaver_mpes
+    build: 
+      context: .
+      dockerfile: dbeaver/Dockerfile
+    volumes:
+      - ./var/cloudbeaver/workspace:/opt/cloudbeaver/workspace
+    networks:
+      - network_mpes
+    ports:
+      - 8091:8978
+
+volumes:
+  pgdata:
+
+networks:
+  network_mpes:
+    driver: bridge

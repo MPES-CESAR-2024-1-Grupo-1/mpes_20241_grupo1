@@ -1,3 +1,2 @@
 backend/.env
-docker-compose.yml
 db/pgdata
