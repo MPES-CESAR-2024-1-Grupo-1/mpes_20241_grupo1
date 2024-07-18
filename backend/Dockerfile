@@ -9,4 +9,10 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY backend/. .
-CMD ["flask", "run", "--debug"]
+
+
+
+# Comando para iniciar a aplicação Flask com Gunicorn
+# CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--workers", "3", "--threads", "2", "-b", "0.0.0.0:5000", "app:app"]
+# CMD ["flask", "run", "--debug"]

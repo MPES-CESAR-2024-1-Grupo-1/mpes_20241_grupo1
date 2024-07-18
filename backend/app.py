@@ -4,8 +4,11 @@ from datetime import datetime
 import pytz
 import requests
 import pandas as pd
+import markdown
 
 from src.db.Connection import Connection
+from src.gpt.gpt_api import GptApi
+from src.persona.persona_builder import PersonaBuilder
 
 # Definindo o fuso horário de Brasília
 brasilia_tz = pytz.timezone('America/Sao_Paulo')
@@ -30,6 +33,22 @@ def index():
 @app.route('/hello/<name>')
 def hello(name=None):
     return render_template('hello.html', person=name)
+
+
+
+@app.route('/gpt')
+def gpt_pergunta():
+    persona = PersonaBuilder()
+    persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
+    persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
+    
+
+
+    gpt_api = GptApi()
+    retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
+    retorno = markdown.markdown(retorno)
+    return render_template("gpt.html", retorno=retorno)
+
 
 
 

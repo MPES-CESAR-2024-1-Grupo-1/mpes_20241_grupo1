@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - 8090:5000
+      - 5000:5000
     networks:
       - network_mpes
   
@@ -24,18 +24,47 @@ services:
       - 5432:5432
     volumes:
       - ./db/pgdata:/var/lib/postgresql/data
-    
-  dbeaver_mpes:
-    container_name: dbeaver_mpes
-    build: 
-      context: .
-      dockerfile: dbeaver/Dockerfile
+
+  # NGINX
+  proxy_reverso_mpes:
+    image: nginx
+    container_name: proxy_reverso_mpes
     volumes:
-      - ./var/cloudbeaver/workspace:/opt/cloudbeaver/workspace
+      - ./proxy_reverso/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
     networks:
       - network_mpes
-    ports:
-      - 8091:8978
+    command: [nginx-debug, '-g', 'daemon off;']
+    depends_on:
+      - backend_mpes
+
+    # restart: always
+    # build: 
+    #   context: .
+    #   dockerfile: proxy_reverso/Dockerfile
+    # volumes:
+    #   - ./templates:/etc/nginx/templates
+    # ports:
+    #   - "8090:80"
+    # # environment:
+    #   # - NGINX_HOST=foobar.com
+    #   # - NGINX_PORT=80
+    # networks:
+    #   - network_mpes
+    # command: [nginx-debug, '-g', 'daemon off;']
+
+  # dbeaver_mpes:
+  #   container_name: dbeaver_mpes
+  #   build: 
+  #     context: .
+  #     dockerfile: dbeaver/Dockerfile
+  #   volumes:
+  #     - ./var/cloudbeaver/workspace:/opt/cloudbeaver/workspace
+  #   networks:
+  #     - network_mpes
+  #   ports:
+  #     - 8978:8978
 
 volumes:
   pgdata:
