@@ -8,7 +8,9 @@ import markdown
 
 from src.db.Connection import Connection
 from src.gpt.gpt_api import GptApi
+from src.gpt.EventHandler import EventHandler
 from src.persona.persona_builder import PersonaBuilder
+
 
 # Definindo o fuso horário de Brasília
 brasilia_tz = pytz.timezone('America/Sao_Paulo')
@@ -26,7 +28,36 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 @app.route('/')
 def index():
-    return '<h1>Hello World! I have been seen times2.</h1>'
+    return '<h1>Api MPES 2024.1 Hello World! I have been seen times2.</h1>'
+
+
+
+
+@app.route('/gpt_assist')
+def gpt_assist():
+    assistent_id = "asst_RybHhABngVJoOdkFmlJLGpkW"
+
+    msg = "que eram os espartanos."
+    # event_handler = EventHandler()
+
+    gpt_api = GptApi()
+    thread = gpt_api.m_criar_thread()
+    gpt_api.m_adicionar_msg_thread(thread=thread, msg=msg)
+
+    msg = gpt_api.m_run(thread=thread, assistant_id=assistent_id)
+
+    # event_handler.m_conversa(client=gpt_api.CLIENT, thread=thread, assistant=assistent_id)
+
+    print(msg)
+
+    # retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
+    # msg = markdown.markdown( msg)
+    return render_template("gpt.html", retorno=msg)
+
+
+
+
+
 
 
 @app.route('/hello/')
@@ -42,12 +73,13 @@ def gpt_pergunta():
     persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
     persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
     
-
-
     gpt_api = GptApi()
     retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
     retorno = markdown.markdown(retorno)
     return render_template("gpt.html", retorno=retorno)
+
+
+
 
 
 

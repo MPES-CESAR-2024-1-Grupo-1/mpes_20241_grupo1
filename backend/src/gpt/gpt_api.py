@@ -30,3 +30,35 @@ class GptApi():
 
         return completion.choices[0].message.content
 
+
+    def m_criar_thread(self):
+        thread =  self.CLIENT.beta.threads.create()
+        print(thread)
+        return thread
+    
+
+    def m_adicionar_msg_thread(self, thread, msg: str):
+        message = self.CLIENT.beta.threads.messages.create(
+            thread_id=thread.id,
+            role="user",
+            content=msg
+        )
+
+
+    def m_run(self, thread, assistant_id):
+        run = self.CLIENT.beta.threads.runs.create_and_poll(
+            thread_id=thread.id,
+            assistant_id=assistant_id,
+            instructions=""
+        )
+
+        if run.status == 'completed': 
+            messages = self.CLIENT.beta.threads.messages.list(
+                thread_id=thread.id,
+
+            )
+            print(messages)
+            return messages
+        else:
+            print(run.status)
+            return "Falhou!!!"

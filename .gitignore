@@ -1,2 +1,7 @@
+dbeaver
 backend/.env
+backend/env
 db/pgdata
+old*
+frontend/.next
+frontend/node_modules
