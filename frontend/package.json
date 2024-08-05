@@ -9,9 +9,12 @@
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
 	},
 	"dependencies": {
+		"@nextui-org/accordion": "^2.0.38",
 		"@nextui-org/button": "2.0.37",
+		"@nextui-org/card": "^2.0.33",
 		"@nextui-org/code": "2.0.32",
-		"@nextui-org/input": "2.2.4",
+		"@nextui-org/divider": "^2.0.31",
+		"@nextui-org/input": "^2.2.4",
 		"@nextui-org/kbd": "2.0.33",
 		"@nextui-org/link": "2.0.34",
 		"@nextui-org/listbox": "2.1.25",
@@ -28,7 +31,8 @@
 		"next": "14.2.4",
 		"next-themes": "^0.2.1",
 		"react": "18.3.1",
-		"react-dom": "18.3.1"
+		"react-dom": "18.3.1",
+		"react-icons": "^5.2.1"
 	},
 	"devDependencies": {
 		"@types/node": "20.5.7",

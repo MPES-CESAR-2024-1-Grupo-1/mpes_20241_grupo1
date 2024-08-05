@@ -21,7 +21,11 @@ This is a template for creating applications using Next.js 14 (app directory) an
 To create a new project based on this template using `create-next-app`, run the following command:
 
 ```bash
+# Projeto nodelo do nextui
 npx create-next-app -e https://github.com/nextui-org/next-app-template
+
+# Instalar o CLI do NextUI 
+npx nextui-cli@latest
 ```
 
 ### Install dependencies

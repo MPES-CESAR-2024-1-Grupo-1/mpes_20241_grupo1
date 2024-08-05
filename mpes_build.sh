@@ -1,11 +1,32 @@
 #!/bin/bash
 
+PATH_PROJETO=$(pwd)
+echo $PATH_PROJETO
 
+echo "[ACAO] ==> BUILD DO PROJETO"
 echo "########################################################################"
-echo "                   CONSTRUINDO O PROJETO DOCKER                         "
+echo "                        CONFIGURAÇÃO DO AMBIENTE                        "
 echo "------------------------------------------------------------------------"
 
-echo "##### Build No Docker Inicio! #####"
-sudo chown -R dev:dev db/
+echo "[ACAO] ==> CRIAR A REDE DOCKER DO PROJETO"
+NETWORK_NAME="network_mpes"
+if ! docker network ls --format '{{.Name}}' | grep -q "$NETWORK_NAME"; then
+    echo "Criando o $NETWORK_NAME"
+    docker network create --driver bridge $NETWORK_NAME
+else
+    echo "==> A rede já existe $NETWORK_NAME"
+fi
+
+
+echo ""
+echo ""
+echo "########################################################################"
+echo "                          DOCKER COMPOSE UP                             "
+echo "------------------------------------------------------------------------"
+
 docker compose up --build
-echo "##### Build No Docker Fim! #####"
+
+echo " "
+echo " "
+
+

@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask_cors import CORS, cross_origin
 from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime
 import pytz
@@ -24,11 +25,69 @@ VERIFY_TOKEN = 'EducacionaAssistente'
 
 
 app = Flask(__name__)
+
+
 app.wsgi_app = ProxyFix(app.wsgi_app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+# Content-Type
+
 
 @app.route('/')
 def index():
     return '<h1>Api MPES 2024.1 Hello World! I have been seen times2.</h1>'
+
+
+
+
+
+
+
+
+# TESTE DE FORMULÁRIO
+@app.route('/form_teste', methods=['POST'])
+def m_receber_dados():
+    if request.method == 'POST':
+        formulario = request.json
+
+        print(formulario)
+        print(formulario["pergunta"])
+
+        persona = PersonaBuilder()
+        persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
+        persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
+
+        gpt_api = GptApi()
+        retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {formulario['pergunta']}")
+        retorno = markdown.markdown(retorno)
+        return retorno
+        
+        # return render_template("gpt.html", retorno=retorno)
+
+
+
+
+
+        # return formulario
+        # return formulario["pergunta"]
+
+
+
+# persona = PersonaBuilder()
+# persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
+# persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
+
+# gpt_api = GptApi()
+# retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
+# retorno = markdown.markdown(retorno)
+# return render_template("gpt.html", retorno=retorno)
+
+
+
+
+
+
+
+
 
 
 
@@ -135,6 +194,9 @@ def webhook():
         else:
             print('Erro ao enviar resposta:', response.text)
         return 'EVENT_RECEIVED', 200
+
+
+
 
 
 if __name__ == "__main__":

@@ -1,0 +1,13 @@
+# Ignorar node_modules, pois as dependências serão instaladas no container
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignorar arquivos de build
+.next
+out
+
+
+# Ignorar arquivos de configuração do editor
+.vscode
+.idea

@@ -4,7 +4,7 @@
 FROM nginx:1.27.0
 
 # Copie o arquivo de configuração personalizado para o container
-COPY proxy_reverso/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copie os arquivos do site para o diretório padrão do Nginx
 # COPY html /usr/share/nginx/html
