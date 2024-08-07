@@ -6,35 +6,21 @@ COPY package*.json .
 RUN npm install
 COPY . .
 RUN npm run build
+# RUN npm install pm2@latest -g
 
 
 # PRODUÇÃO
 FROM node:22.5-alpine
 WORKDIR /app
+RUN npm install pm2@latest -g
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/build ./build
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
+COPY --from=builder /app/.env ./.env
+COPY --from=builder /app/.env.production ./.env.production
 
-# CMD [ "npm", "start"]
-
-
-
-# cria uma pasta chamada app
-
-# RUN ["mkdir", "/app"]
-
-
-# Copia todos os arquivos da pasta frontend, menos o que estão mapeados no .dockerignore
-# COPY . .
-
-# Cria o node_modules e instala as dependências
-# RUN ["npm", "install", "--production"]
-
-# Constroi a estrutura no next.js
-# RUN ["npm", "run", "build"]
-
-# USER node
-# Expõem a porta 3000  
-# EXPOSE 3000
+ENTRYPOINT [ "./entrypoint.sh" ]

@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-"use client";
-
+'use client';
 
 export default function CpHeader() {
 

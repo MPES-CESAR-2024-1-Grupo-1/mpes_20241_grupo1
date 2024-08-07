@@ -36,3 +36,19 @@
    - port: 5432:5432
 
    
+
+
+
+
+proxy_reverso_mpes  | 10.0.2.2 - - 
+   [07/Aug/2024:16:30:37 +0000] 
+   "GET /_next/static/chunks/fd9d1056-13aa76f036058ae3.js HTTP/1.1" 
+   404 555 
+   "http://localhost:8091/" 
+   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+
+
+
+proxy_reverso_mpes  | 172.18.0.1 - - [07/Aug/2024:16:41:51 +0000] "GET /api/ HTTP/1.1" 200 62 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+
+proxy_reverso_mpes  | 172.18.0.1 - - [07/Aug/2024:16:41:51 +0000] "GET /favicon.ico HTTP/1.1" 304 0 "http://localhost:8091/api/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"

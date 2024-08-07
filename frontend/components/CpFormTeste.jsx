@@ -1,9 +1,7 @@
 /* eslint-disable prettier/prettier */
 'use client'
+// eslint-disable-next-line import/order
 import { Button } from "@nextui-org/button";
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
-import Divider from "@nextui-org/divider";
-import Link  from "@nextui-org/link";
 // import {
 //     Card, 
 //     CardHeader, 
@@ -13,8 +11,6 @@ import Link  from "@nextui-org/link";
 //     Link, 
 //     Image
 // } from "@nextui-org/react";
-
-
 
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
@@ -35,8 +31,10 @@ export default function CpFormTeste() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        const api_url = process.env.NEXT_PUBLIC_URL_BE;
         
-        const res = await fetch('http://localhost/api/form_teste', {
+        // URL_BE=be_mpes
+        const res = await fetch(api_url, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin" : "*",
@@ -92,8 +90,7 @@ export default function CpFormTeste() {
     dangerouslySetInnerHTML={{ __html: gptReposta }} />
 
         </div>
-
-
+            
             <form 
                 onSubmit={handleSubmit}
                 className="
