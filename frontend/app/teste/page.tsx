@@ -6,6 +6,7 @@ import CpHeaderMain from "@/components/CpHeaderMain";
 import CpMenulateral from "@/components/CpMenuLateral";
 import CpFooter from "@/components/CpFooter";
 import CpFormTeste from "@/components/CpFormTeste";
+import FormTeste from "./form-teste";
 
 
 export default function Teste() {
@@ -15,7 +16,7 @@ export default function Teste() {
       header={<CpHeaderMain />}
       menu={ <CpMenulateral/> }
     >
-      <CpFormTeste />
+      <FormTeste />
     </PgMenuLateralLayout>     
     
   );
