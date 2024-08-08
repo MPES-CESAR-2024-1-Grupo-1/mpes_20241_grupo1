@@ -14,16 +14,14 @@ export default function FormTeste() {
    const [gptReposta, setGptReposta] = useState("RESPOSTA INICIAL");
 
     async function myHandler(data: FormData){
-
         let retorno = await handleSubmit(data);
 
         if(retorno !== undefined){
             setGptReposta(retorno);
         }
-
     }
 
-    
+
     return (
         <div className="
             h-screen  
@@ -32,6 +30,7 @@ export default function FormTeste() {
             gap-2
             ">
 
+            <h1>URL DA API É: {process.env.URL_BE}</h1>
 
         <div className="h-[800] min-h-[800] w-[700] overflow-y-scroll border border-gray-300 p-4">
 
@@ -43,10 +42,9 @@ export default function FormTeste() {
     />
 
         </div>
-        <p>{process.env.URL_BE}</p>
-            
             <form
-                action={ myHandler} method="POST"
+                action={ myHandler} 
+                method="POST"
                 className="
                     container flex flex-col gap-4 justify-end "
             >
