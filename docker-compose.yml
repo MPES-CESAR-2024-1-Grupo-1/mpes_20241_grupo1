@@ -18,7 +18,7 @@ services:
     # command: ["pm2", "start", "ecosystem.config.js"]
     # entrypoint: ["entrypoint.sh"]
     ports:
-      - 8091:3000
+      - 8000:3000
     networks:
       - network_mpes
 
