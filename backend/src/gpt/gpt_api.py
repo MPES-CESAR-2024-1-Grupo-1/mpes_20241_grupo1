@@ -7,12 +7,13 @@ load_dotenv()
 
 class GptApi():
     def __init__(self) -> None:
-        self.OPENAI_TEMPERATURE       = int(os.getenv('OPENAI_TEMPERATURE'))
-        self.OPENAI_MAX_TOKENS        = int(os.getenv('OPENAI_MAX_TOKENS'))
-        self.OPENAI_FREQUENCY_PENALTY = int(os.getenv('OPENAI_FREQUENCY_PENALTY'))
-        self.OPENAI_PRESENCE_PENALTY  = int(os.getenv('OPENAI_PRESENCE_PENALTY'))
-        self.OPENAI_MODELO            = os.getenv('OPENAI_MODELO')
-        self.CLIENT                   = OpenAI( api_key= os.getenv('OPENAI_API_KEY') )
+        self.OPENAI_TEMPERATURE       = 1
+        self.OPENAI_MAX_TOKENS        = 4090
+        self.OPENAI_FREQUENCY_PENALTY = 0
+        self.OPENAI_PRESENCE_PENALTY  = 0
+        self.OPENAI_MODELO            = "gpt-4o"
+        self.CLIENT                   = OpenAI( api_key= "sk-proj-49cjrJazY5zqr0qmZ7V7T3BlbkFJ7w2Cr01MurzeyaOwHci3" )
+
 
 
     def m_conversa(self, persona: PersonaBuilder, pergunta: str):
