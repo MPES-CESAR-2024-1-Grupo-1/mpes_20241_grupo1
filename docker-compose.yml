@@ -2,6 +2,7 @@ services:
   be_mpes:
     container_name: be_mpes
     build: backend
+    restart: always
     # ports:
       # - 5000:5000
     networks:
@@ -12,7 +13,7 @@ services:
   fe_mpes:
     container_name: fe_mpes
     build: frontend
-    # restart: always
+    restart: always
     # command: ["npm", "run", "start"]
     # command: ["npm", "start"]
     # command: ["pm2", "start", "ecosystem.config.js"]
