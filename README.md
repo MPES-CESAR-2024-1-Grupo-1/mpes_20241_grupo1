@@ -42,12 +42,51 @@ Desenvolver uma aplicação com painel de acompanhamento que permita aos docente
 
 
 ## Equipe:
- - 
-<p>
-Desenvolver uma aplicação com painel de acompanhamento que permita aos docentes interagir, a partir do WhatsApp, com uma IA Generativa, para suporte educacional. 
-</p>
 
 
+<table border="1px" style="width: 100%">
+   <thead>
+      <tr>
+         <th style="width: 30%; text-align: center; background-color: #d6d3d1;">Nome</th>
+         <th style="width: 20%; text-align: center; background-color: #d6d3d1;">Celular</th>
+         <th style="width: 20%; text-align: center; background-color: #d6d3d1;">E-mail</th>
+         <th style="width: 30%; text-align: center; background-color: #d6d3d1;">Função</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+            <td>Robson Passos de Souza</td>
+            <td>(81) 988212347</td>
+            <td>rps3@cesar.school</td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>Rafael Freitas Lima</td>
+            <td>(81) 988341541</td>
+            <td>rfl2@cesar.school</td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>Jonathan Henrique de Araujo Silva</td>
+            <td>(81) 982467019</td>
+            <td>jhas2@cesar.school</td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>Juciarias Medeiros Nascimento</td>
+            <td>(85) 981586400</td>
+            <td>jmn2@cesar.school</td>
+            <td></td>
+      </tr>
+      <tr>
+            <td>Matheus Monteiro Lins</td>
+            <td>(81) 994994094</td>
+            <td>mml2@cesar.school</td>
+            <td></td>
+      </tr>
+
+   </tbody>
+</table>
 
 
 ## Repositório de Documentação do Projeto
