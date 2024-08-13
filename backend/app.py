@@ -60,27 +60,7 @@ def m_receber_dados():
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {formulario['pergunta']}")
         retorno = markdown.markdown(retorno)
         return retorno
-        
-        # return render_template("gpt.html", retorno=retorno)
-
-
-
-
-
-        # return formulario
-        # return formulario["pergunta"]
-
-
-
-# persona = PersonaBuilder()
-# persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
-# persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
-
-# gpt_api = GptApi()
-# retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
-# retorno = markdown.markdown(retorno)
-# return render_template("gpt.html", retorno=retorno)
-
+   
 
 
 

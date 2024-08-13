@@ -1,4 +1,60 @@
+<img src="readme_docs/Captura de tela de 2024-08-13 13-42-08.png" />
 
+<br>
+
+## Problemática
+<p>
+Segundo a pesquisa do professor Cleon, 69,5% das escolas não possuem laboratório de informática, na região norte apresentam os piores índices de conexão de internet móvel, 13,1% das escolas sem internet e 2,2% das escolas sem energia elétrica. Baseado nisso, é sabido que os professores de ensino fundamental se utilizam de seus smartphones para realizarem seus planejamentos de aula, produzirem materiais e exercícios, com uma internet de pouca qualidade.
+</p>
+
+
+
+<br>
+
+## Análise de soluções
+<p>
+Sendo assim, a proposta é a criação de uma assistente virtual, integrada ao WhatsApp, em que há a coleta do número de telefone do professor, é realizado algumas perguntas-chave e o material de aula é disponibilizado conforme as escolhas do mesmo, e tudo isso exigindo uma conexão razoável de internet, para ser trabalhado a equidade do ensino básico brasileiro.
+</p>
+
+
+
+<br>
+
+## Anterioridades
+<p>
+Já existem ferramentas com uso bem semelhante a essa ideia, mas o diferencial é que essa assistente não exige altos recursos de internet, além de ser específico para o ensino básico.
+</p>
+
+<br>
+
+## Objetivo
+<p>
+Desenvolver uma aplicação com painel de acompanhamento que permita aos docentes interagir, a partir do WhatsApp, com uma IA Generativa, para suporte educacional. 
+</p>
+
+### Desafio 1: IA Generativa e Educação: proposta de uma ferramenta para suporte a docentes. 
+
+<img src="readme_docs/esquema_desafio1.png" />
+
+
+<br>
+
+
+
+## Equipe:
+ - 
+<p>
+Desenvolver uma aplicação com painel de acompanhamento que permita aos docentes interagir, a partir do WhatsApp, com uma IA Generativa, para suporte educacional. 
+</p>
+
+
+
+
+## Repositório de Documentação do Projeto
+
+<a href="https://drive.google.com/drive/u/2/folders/1mHKebFOU_om07Hdl-L5hNnVV2izaS84O">Google Driver</a>
+
+<br>
 
 # Tecnologias Utilizadas
    - Frontend:
@@ -39,16 +95,3 @@
 
 
 
-
-proxy_reverso_mpes  | 10.0.2.2 - - 
-   [07/Aug/2024:16:30:37 +0000] 
-   "GET /_next/static/chunks/fd9d1056-13aa76f036058ae3.js HTTP/1.1" 
-   404 555 
-   "http://localhost:8091/" 
-   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-
-
-
-proxy_reverso_mpes  | 172.18.0.1 - - [07/Aug/2024:16:41:51 +0000] "GET /api/ HTTP/1.1" 200 62 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-
-proxy_reverso_mpes  | 172.18.0.1 - - [07/Aug/2024:16:41:51 +0000] "GET /favicon.ico HTTP/1.1" 304 0 "http://localhost:8091/api/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
