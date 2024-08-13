@@ -84,13 +84,6 @@ Desenvolver uma aplicação com painel de acompanhamento que permita aos docente
       - Docker
 
 
-# POSTGRES
-   - user: postgres
-   - pass: postgres
-   - db: db_mpes
-   - conteiner_name: db_postgres_mpes
-   - port: 5432:5432
-
    
 
 
