@@ -12,6 +12,15 @@ from src.gpt.gpt_api import GptApi
 from src.gpt.EventHandler import EventHandler
 from src.persona.persona_builder import PersonaBuilder
 
+# PARA DEBUG APAGAR
+from src.gpt.model.professor import ModelProfessor
+from src.gpt.model.assistente import ModelAssistente
+from src.gpt.model.gpr_thread import ModelGptThread
+from src.gpt.model.metrica_uso import ModelMetricaUso
+from src.gpt.model.serie_ensino import ModelSerieEnsino
+
+
+
 
 # Definindo o fuso horário de Brasília
 brasilia_tz = pytz.timezone('America/Sao_Paulo')
@@ -36,6 +45,15 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def index():
     return '<h1>Api MPES 2024.1 Hello World! I have been seen times2.</h1>'
 
+
+
+
+
+@app.route('/debug')
+def gpt_debug():
+    # ROTA DE DEBUG
+
+    return render_template("gpt.html", retorno="<h1>Rodou debug</h1>")
 
 
 

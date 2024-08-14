@@ -1,44 +1,44 @@
 <mxfile host="65bd71144e">
     <diagram id="cB6HX_7xUs5vujDKLvnG" name="Page-1">
-        <mxGraphModel dx="886" dy="659" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="2200" math="0" shadow="0">
+        <mxGraphModel dx="1174" dy="596" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="2200" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="8" value="tb_gpt_assistente" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="1" vertex="1">
-                    <mxGeometry x="710" y="340" width="250" height="160" as="geometry"/>
+                    <mxGeometry x="140" y="360" width="250" height="160" as="geometry"/>
                 </mxCell>
                 <mxCell id="9" value="+ id_assistente : int (pk)&#10;+ gpt_codigo : str&#10;+ alias_str_numero : str&#10;+ descricao : str" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="8" vertex="1">
                     <mxGeometry y="30" width="250" height="130" as="geometry"/>
                 </mxCell>
                 <mxCell id="10" value="tb_metrica_uso" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="1" vertex="1">
-                    <mxGeometry x="710" y="540" width="250" height="250" as="geometry"/>
+                    <mxGeometry x="140" y="560" width="250" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="+ id_metrica_uso : int (pk)&#10;+ professor_id : int (fk)&#10;+ serie : int &#10;+ dt_uso : data&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="10" vertex="1">
-                    <mxGeometry y="30" width="250" height="220" as="geometry"/>
+                <mxCell id="11" value="+ id_metrica_uso : int (pk)&#10;+ professor_id : int (fk)&#10;+ serie_ensino_id : int (fk) &#10;+ dt_uso : data&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="10" vertex="1">
+                    <mxGeometry y="30" width="250" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="tb_metrica_uso" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="1">
-                    <mxGeometry x="1550" y="760" width="250" height="100" as="geometry"/>
+                <mxCell id="12" value="tb_metrica_uso" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="780" width="250" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="+ id_metrica_uso : int (pk)&#10;+ professor_id : int (fk)&#10;+ dt_uso : data&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="12">
+                <mxCell id="13" value="+ id_metrica_uso : int (pk)&#10;+ professor_id : int (fk)&#10;+ dt_uso : data&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="12" vertex="1">
                     <mxGeometry y="30" width="250" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="" style="group" vertex="1" connectable="0" parent="1">
-                    <mxGeometry x="1290" y="290" width="500" height="90" as="geometry"/>
+                <mxCell id="27" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="720" y="310" width="500" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="tb_serie_ensino" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="27">
+                <mxCell id="15" value="tb_serie_ensino" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="27" vertex="1">
                     <mxGeometry x="280" width="220" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="+ id_serie_ensino : int (pk)&#10;+ alias_str_numero : str&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="15">
+                <mxCell id="16" value="+ id_serie_ensino : int (pk)&#10;+ alias_str_numero : str&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="15" vertex="1">
                     <mxGeometry y="30" width="220" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;" edge="1" parent="27" source="17" target="16">
+                <mxCell id="19" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;" parent="27" source="17" target="16" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" value="&lt;ul&gt;&lt;li&gt;6 (sexto registro)&lt;/li&gt;&lt;li&gt;6 # para o 4 ° Ano Ensino Fundamental&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="27">
+                <mxCell id="17" value="&lt;ul&gt;&lt;li&gt;6 (sexto registro)&lt;/li&gt;&lt;li&gt;6 # para o 4 ° Ano Ensino Fundamental&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="27" vertex="1">
                     <mxGeometry width="260" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="" style="group" vertex="1" connectable="0" parent="1">
-                    <mxGeometry x="1370" y="120" width="410" height="100" as="geometry"/>
+                <mxCell id="30" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="800" y="140" width="410" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="6" value="tb_professor" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="30" vertex="1">
                     <mxGeometry x="200" width="210" height="100" as="geometry"/>
@@ -46,45 +46,45 @@
                 <mxCell id="7" value="+ id_professor : int (pk)&#10;+ numero_telefone : str&#10;+ email : str" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="6" vertex="1">
                     <mxGeometry y="30" width="210" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.01;entryY=0.143;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" edge="1" parent="30" source="25" target="7">
+                <mxCell id="24" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.01;entryY=0.143;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" parent="30" source="25" target="7" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="20.000000000000455" y="30" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="25" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="30">
+                <mxCell id="25" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="30" vertex="1">
                     <mxGeometry width="180" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="31" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-                    <mxGeometry x="1820" y="680" width="180" height="80" as="geometry"/>
+                <mxCell id="31" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="1250" y="700" width="180" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.01;entryY=0.143;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" edge="1" source="31" parent="1">
+                <mxCell id="32" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.01;entryY=0.143;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" parent="1" source="31" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="2022.1" y="720.01" as="targetPoint"/>
+                        <mxPoint x="1452.1" y="740.01" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="33" value="" style="group" vertex="1" connectable="0" parent="1">
-                    <mxGeometry x="1282" y="440" width="498" height="100" as="geometry"/>
+                <mxCell id="33" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="712" y="460" width="498" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="tb_gpt_thread" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=0;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;swimlaneLine=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="33" vertex="1">
                     <mxGeometry x="288" width="210" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="+ id_thread : int (pk)&#10;+ usuario_id : int (fk)&#10;+ thread_codigo : str" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="2" vertex="1">
+                <mxCell id="3" value="+ id_thread : int (pk)&#10;+ professor_id : int (fk)&#10;+ thread_codigo : str" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontFamily=Roboto Mono;1,100..700&amp;display=swap;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="2" vertex="1">
                     <mxGeometry y="30" width="210" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;2 (id do professor)&lt;/li&gt;&lt;li&gt;thread_fyA5T6Zgg98kD6z9Ut4k1mAP&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="33">
+                <mxCell id="28" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;2 (id do professor)&lt;/li&gt;&lt;li&gt;thread_fyA5T6Zgg98kD6z9Ut4k1mAP&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="33" vertex="1">
                     <mxGeometry width="270" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.129;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" edge="1" source="28" parent="33" target="3">
+                <mxCell id="29" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.129;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" parent="33" source="28" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="270.0999999999999" y="40.00999999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="34" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-                    <mxGeometry x="1350" y="760" width="180" height="80" as="geometry"/>
+                <mxCell id="34" value="&lt;ul&gt;&lt;li&gt;1 (primero registro)&lt;/li&gt;&lt;li&gt;558198884444&lt;/li&gt;&lt;li&gt;meuemail@gmail.com&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="780" width="180" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="35" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.004;entryY=0.129;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" edge="1" source="34" parent="1" target="13">
+                <mxCell id="35" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.004;entryY=0.129;entryDx=0;entryDy=0;endArrow=none;endFill=0;dashed=1;entryPerimeter=0;" parent="1" source="34" target="13" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1532.1" y="800.01" as="targetPoint"/>
+                        <mxPoint x="962.0999999999999" y="820.01" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>
