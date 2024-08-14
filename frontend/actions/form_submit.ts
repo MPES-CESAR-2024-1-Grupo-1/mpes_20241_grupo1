@@ -18,8 +18,8 @@ export const handleSubmit = async ( form_data: FormData) => {
 
     // URL_BE=be_mpes
     if ( API_URL === undefined){
-        console.log('URL NÃO DEFINIDA');
-        return
+        // console.log('URL NÃO DEFINIDA');
+        return "url não definida!";
     }
 
     const res = await fetch( API_URL, {
@@ -39,13 +39,15 @@ export const handleSubmit = async ( form_data: FormData) => {
         // Lógica para quando o envio for bem-sucedido
         console.log('Formulário enviado com sucesso!');
         console.log( textoResposta );
-        // resposta = textoResposta;
-        // setGptReposta( textoResposta )
+
+        // return textoResposta;
         return textoResposta;
+        
     } else {
         // Lógica para quando houver um erro
         console.error('Erro ao enviar o formulário');
         return "Nao voutou nada";
+        // return "Nao voutou nada";
     }
     return "Nao voutou nada";
 };

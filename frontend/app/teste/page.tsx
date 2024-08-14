@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 
+import FormTeste from "./form-teste";
+
 import PgMenuLateralLayout from "@/components/PgMenuLateralLayout";
 import CpHeaderMain from "@/components/CpHeaderMain";
 import CpMenulateral from "@/components/CpMenuLateral";
 import CpFooter from "@/components/CpFooter";
 import CpFormTeste from "@/components/CpFormTeste";
-import FormTeste from "./form-teste";
+
 
 
 export default function Teste() {
@@ -17,8 +19,7 @@ export default function Teste() {
       menu={ <CpMenulateral/> }
     >
       <FormTeste />
-    </PgMenuLateralLayout>     
-    
+    </PgMenuLateralLayout>
   );
 }
 
