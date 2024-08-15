@@ -123,7 +123,9 @@ Desenvolver uma aplicação com painel de acompanhamento que permita aos docente
       - Docker
 
 
-   
+## Estrutura da Base de Dados
+
+<img src="_Documentacao/Diagrama_banco_dados.png" />
 
 
 
