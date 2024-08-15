@@ -3,11 +3,15 @@ services:
     container_name: be_mpes
     build: backend
     restart: always
+    depends_on:
+      - db_mpes
     # ports:
       # - 5000:5000
     networks:
       - network_mpes
-
+    env_file:
+      - path: ./backend/development.env
+        required: true
 
   # FRONTEN - NEXT.JS sem PM2
   fe_mpes:
@@ -23,6 +27,17 @@ services:
     networks:
       - network_mpes
 
+  db_mpes:
+    container_name: db_mpes
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - network_mpes
+    env_file:
+      - path: ./postgres.development.env
+        required: true
 
   # NGINX
   # proxy_reverso_mpes:
@@ -45,7 +60,6 @@ volumes:
 
 networks:
   network_mpes:
-    external: true
 
 # volumes:
     #   - ./proxy_reverso/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -68,7 +82,7 @@ networks:
 
 
     # restart: always
-    # build: 
+    # build:
     #   context: .
     #   dockerfile: proxy_reverso/Dockerfile
     # volumes:
@@ -84,7 +98,7 @@ networks:
 
   # dbeaver_mpes:
   #   container_name: dbeaver_mpes
-  #   build: 
+  #   build:
   #     context: .
   #     dockerfile: dbeaver/Dockerfile
   #   volumes:
