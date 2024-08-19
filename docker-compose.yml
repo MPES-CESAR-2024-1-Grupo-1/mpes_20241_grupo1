@@ -5,8 +5,8 @@ services:
     restart: always
     depends_on:
       - db_mpes
-    # ports:
-      # - 5000:5000
+    ports:
+      - 5000:5000
     networks:
       - network_mpes
     env_file:
