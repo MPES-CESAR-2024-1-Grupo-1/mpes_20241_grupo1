@@ -132,6 +132,7 @@ def webhook():
         whatsapp.marcar_como_lida()
         whatsapp.responder_mensagem(retorno)
 
+        return 'ok', 200
 
 
 
