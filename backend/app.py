@@ -130,7 +130,7 @@ def webhook():
         gpt_api = GptApi()
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {whatsapp.texto_da_mensagem_recebida()}")
         whatsapp.marcar_como_lida()
-        whatsapp.enviar_mensagem(retorno)
+        whatsapp.responder_mensagem(retorno)
 
 
 
