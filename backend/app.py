@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
-
+import logging
 import pytz
 
 import markdown
@@ -27,6 +27,11 @@ brasilia_tz = pytz.timezone('America/Sao_Paulo')
 VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
 app = Flask(__name__)
+
+# Usa o logger do Gunicorn
+gunicorn_logger = logging.getLogger("gunicorn.error")
+app.logger.handlers.extend(gunicorn_logger.handlers)
+app.logger.setLevel(logging.DEBUG)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 CORS(app, resources={r"/*": {"origins": "*"}})
