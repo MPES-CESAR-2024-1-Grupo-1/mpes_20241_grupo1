@@ -24,41 +24,23 @@ import os
 # Definindo o fuso horário de Brasília
 brasilia_tz = pytz.timezone('America/Sao_Paulo')
 
-#https://www.mpes20241grupo1.com.br/webhook
-# Seu token de acesso do WhatsApp Business API
-ACCESS_TOKEN = '17ac4e001aa877dca761ca598dce4f56'
 VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
-
-
-
 app = Flask(__name__)
-
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 # Content-Type
 
-
 @app.route('/')
 def index():
     return '<h1>Api MPES 2024.1 Hello World! I have been seen times2.</h1>'
-
-
-
-
 
 @app.route('/debug')
 def gpt_debug():
     # ROTA DE DEBUG
 
     return render_template("gpt.html", retorno="<h1>Rodou debug</h1>")
-
-
-
-
-
-
 
 # TESTE DE FORMULÁRIO
 @app.route('/form_teste', methods=['POST'])
@@ -77,16 +59,6 @@ def m_receber_dados():
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {formulario['pergunta']}")
         retorno = markdown.markdown(retorno)
         return retorno
-
-
-
-
-
-
-
-
-
-
 
 
 @app.route('/gpt_assist')
@@ -110,18 +82,10 @@ def gpt_assist():
     # msg = markdown.markdown( msg)
     return render_template("gpt.html", retorno=msg)
 
-
-
-
-
-
-
 @app.route('/hello/')
 @app.route('/hello/<name>')
 def hello(name=None):
     return render_template('hello.html', person=name)
-
-
 
 @app.route('/gpt')
 def gpt_pergunta():
@@ -133,11 +97,6 @@ def gpt_pergunta():
     retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
     retorno = markdown.markdown(retorno)
     return render_template("gpt.html", retorno=retorno)
-
-
-
-
-
 
 
 @app.route('/teste_conn')
@@ -152,24 +111,22 @@ def teste_criar_tb():
 
     return render_template('hello.html',  person= df.to_json())
 
-
-
 @app.route('/api/webhook', methods=['GET', 'POST'])
 def webhook():
     # Resposta para validação de domínio feita pela Meta ao add um novo webhook
-    if request.method == "GET" and request.args.get('hub.verify_token') == VERIFY_TOKEN:
-        return request.args.get('hub.challenge')
-
+    if request.method == "GET":
+        if request.args.get('hub.verify_token') == VERIFY_TOKEN:
+            return request.args.get('hub.challenge')
+        else:
+            return 'Validação falhou'
 
     if request.method == 'POST':
         whatsapp = WhatsApp(
             mensagem_recebida=request.json
         )
-
         persona = PersonaBuilder()
         persona.m_add_contexto_profissao("Professor de história do ensino fundamental do brasil da quarta série")
         persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
-
         gpt_api = GptApi()
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {whatsapp.texto_da_mensagem_recebida()}")
         whatsapp.marcar_como_lida()
