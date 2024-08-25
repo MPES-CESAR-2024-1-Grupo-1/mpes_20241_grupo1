@@ -3,7 +3,7 @@ from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
 import pytz
-
+import pandas as pd
 import markdown
 
 from src.db.Connection import Connection
@@ -47,6 +47,8 @@ def gpt_debug():
 
     return render_template("gpt.html", retorno="<h1>Rodou debug</h1>")
 
+
+
 # TESTE DE FORMULÁRIO
 @app.route('/form_teste', methods=['POST'])
 def m_receber_dados():
@@ -64,6 +66,7 @@ def m_receber_dados():
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {formulario['pergunta']}")
         retorno = markdown.markdown(retorno)
         return retorno
+
 
 
 @app.route('/gpt_assist')
@@ -87,10 +90,8 @@ def gpt_assist():
     # msg = markdown.markdown( msg)
     return render_template("gpt.html", retorno=msg)
 
-@app.route('/hello/')
-@app.route('/hello/<name>')
-def hello(name=None):
-    return render_template('hello.html', person=name)
+
+
 
 @app.route('/gpt')
 def gpt_pergunta():
@@ -104,6 +105,7 @@ def gpt_pergunta():
     return render_template("gpt.html", retorno=retorno)
 
 
+
 @app.route('/teste_conn')
 def teste_criar_tb():
     query = "SELECT * FROM mpes.tb_teste;"
@@ -115,6 +117,8 @@ def teste_criar_tb():
     print(df)
 
     return render_template('hello.html',  person= df.to_json())
+
+
 
 @app.route('/api/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -144,3 +148,14 @@ def webhook():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug= "--debug")
+
+
+
+
+
+
+# @app.route('/hello/')
+# @app.route('/hello/<name>')
+# def hello(name=None):
+#     return render_template('hello.html', person=name)
+
