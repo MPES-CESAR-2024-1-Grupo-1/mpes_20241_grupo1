@@ -17,22 +17,19 @@ class PersonaBuilder():
         '''Retorna o contesto criado.'''
         txt_contexto = ""
         for i, value in enumerate(self.context):
-            # print(i)
-            # print(value)
 
             if i == 0:
                 txt_contexto = value
-                continue 
-            
+                continue
+
             if i == self.context.__len__() -1:
                 txt_contexto += " " + value + "."
                 continue
             txt_contexto += " " + value
 
-        # print(txt_contexto)
         return txt_contexto
-                    
-            
+
+
 
 
 

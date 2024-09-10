@@ -57,7 +57,7 @@ def m_receber_dados():
         print(formulario["pergunta"])
 
         persona = PersonaBuilder()
-        persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
+        persona.m_add_contexto_profissao("Professor de história da quarta série do ensino fundamental do Brasil")
         persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
 
         gpt_api = GptApi()
@@ -83,7 +83,7 @@ def gpt_assist():
 
     print(msg)
 
-    # retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
+    # retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre Mauricio de Nassau")
     # msg = markdown.markdown( msg)
     return render_template("gpt.html", retorno=msg)
 
@@ -95,13 +95,12 @@ def hello(name=None):
 @app.route('/gpt')
 def gpt_pergunta():
     persona = PersonaBuilder()
-    persona.m_add_contexto_profissao("Professo de história do ensino fundamental do brasil da quarta série")
+    persona.m_add_contexto_profissao("Professor de história da quarta série do ensino fundamental do Brasil")
     persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
-
+    pergunta = request.args.get('pergunta', 'sobre Mauricio de Nassau')
     gpt_api = GptApi()
-    retorno = gpt_api.m_conversa(persona=persona, pergunta="sobre maurissio de nassau")
-    retorno = markdown.markdown(retorno)
-    return render_template("gpt.html", retorno=retorno)
+    retorno = gpt_api.m_conversa(persona=persona, pergunta=pergunta, formato_json=True)
+    return render_template("gpt.html", retorno=markdown.markdown(retorno['resposta']))
 
 
 @app.route('/teste_conn')
@@ -130,12 +129,12 @@ def webhook():
             mensagem_recebida=request.json
         )
         persona = PersonaBuilder()
-        persona.m_add_contexto_profissao("Professor de história do ensino fundamental do brasil da quarta série")
+        persona.m_add_contexto_profissao("Professor de história da quarta série do ensino fundamental do Brasil")
         persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
         gpt_api = GptApi()
-        retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {whatsapp.texto_da_mensagem_recebida()}")
+        retorno = gpt_api.m_conversa(persona=persona, pergunta=f"{whatsapp.texto_da_mensagem_recebida()}", formato_json=True)
         whatsapp.marcar_como_lida()
-        whatsapp.responder_mensagem(retorno)
+        whatsapp.responder_mensagem(markdown.markdown(retorno))
 
         return 'ok', 200
 
