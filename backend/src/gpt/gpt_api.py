@@ -31,7 +31,7 @@ class GptApi():
             messages.extend([
                 { "role": "system", "content": MENSAGEM_PARA_FORMATAR_EM_JSON_COM_METADADOS}
             ])
-        current_app.logger.debug(f"Enviando {[message['content'] for message in messages] } paga GPT")
+        current_app.logger.debug(f"Enviando {[message['content'] for message in messages] } para GPT")
         completion = self.CLIENT.chat.completions.create(
             model             = self.OPENAI_MODELO,
             messages          = messages,

@@ -141,8 +141,8 @@ def webhook():
             persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
             gpt_api = GptApi()
             retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
-            whatsapp.marcar_como_lida()
-            whatsapp.responder_mensagem(markdown.markdown(retorno['resposta']))
+            whatsapp.marque_mensagem_como_lida()
+            whatsapp.responda_mensagem(retorno['resposta'])
             db.salva_log_de_solicitacao(professor, retorno)
             return 'ok', 200
 
