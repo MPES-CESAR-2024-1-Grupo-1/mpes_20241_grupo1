@@ -28,12 +28,3 @@ class PersonaBuilder():
             txt_contexto += ", " + value
 
         return txt_contexto
-
-
-
-
-
-#  messages=[
-#     {"role": "system", "content": "Você é um programador que trabalha com Springboot3 com java."},
-#     {"role": "user", "content": "como configurar um banco de dados postgres que tem um schema."}
-#   ],
