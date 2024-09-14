@@ -60,6 +60,7 @@ services:
   nginx_mpes:
     image: nginx
     container_name: nginx_mpes
+    restart: always
     ports:
       - 5001:80
     networks:
