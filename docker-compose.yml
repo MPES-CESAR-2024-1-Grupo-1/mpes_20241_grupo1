@@ -5,8 +5,8 @@ services:
     restart: always
     depends_on:
       - db_mpes
-    ports:
-      - 5000:5000
+    expose:
+      - 5000
     networks:
       - network_mpes
     env_file:
@@ -22,8 +22,8 @@ services:
     # command: ["npm", "start"]
     # command: ["pm2", "start", "ecosystem.config.js"]
     # entrypoint: ["entrypoint.sh"]
-    ports:
-      - 8000:3000
+    expose:
+      - 3000
     networks:
       - network_mpes
 
@@ -35,75 +35,46 @@ services:
       - 5432:5432
     networks:
       - network_mpes
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     env_file:
       - path: ./postgres.development.env
         required: true
 
-  # NGINX
-  # proxy_reverso_mpes:
-  #   image: nginx
-  #   container_name: proxy_reverso_mpes
-  #   build: proxy_reverso
-  #   ports:
-  #     - 8091:8091
-  #   networks:
-  #     - network_mpes
-  #   command: [nginx-debug, '-g', 'daemon off;']
-  #   depends_on:
-  #     - be_mpes
-  #     - fe_mpes
+
+  grafana_mpes:
+    container_name: grafana_mpes
+    image: grafana/grafana-oss
+    restart: always
+    expose:
+      - 3000
+    networks:
+      - network_mpes
+    volumes:
+      - grafanadata:/var/lib/grafana
+    environment:
+      - GF_SERVER_ROOT_URL=http://localhost:5001/dashboard
+      - GF_SERVER_DOMAIN=http://localhost:5001/dashboard
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+
+  nginx_mpes:
+    image: nginx
+    container_name: nginx_mpes
+    ports:
+      - 5001:80
+    networks:
+      - network_mpes
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    command: [nginx-debug, '-g', 'daemon off;']
+    depends_on:
+      - be_mpes
+      - grafana_mpes
 
 
 volumes:
   pgdata:
-
+  grafanadata:
 
 networks:
   network_mpes:
-
-# volumes:
-    #   - ./proxy_reverso/nginx.conf:/etc/nginx/nginx.conf:ro
-
-  # # POSTGRES
-  # db_mpes:
-  #   image: postgres
-  #   container_name: db_postgres_mpes
-  #   # restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_DB: db_mpes
-  #   networks:
-  #     - network_mpes
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - ./db/pgdata:/var/lib/postgresql/data
-
-
-    # restart: always
-    # build:
-    #   context: .
-    #   dockerfile: proxy_reverso/Dockerfile
-    # volumes:
-    #   - ./templates:/etc/nginx/templates
-    # ports:
-    #   - "8090:80"
-    # # environment:
-    #   # - NGINX_HOST=foobar.com
-    #   # - NGINX_PORT=80
-    # networks:
-    #   - network_mpes
-    # command: [nginx-debug, '-g', 'daemon off;']
-
-  # dbeaver_mpes:
-  #   container_name: dbeaver_mpes
-  #   build:
-  #     context: .
-  #     dockerfile: dbeaver/Dockerfile
-  #   volumes:
-  #     - ./var/cloudbeaver/workspace:/opt/cloudbeaver/workspace
-  #   networks:
-  #     - network_mpes
-  #   ports:
-  #     - 8978:8978
