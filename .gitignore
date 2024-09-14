@@ -7,3 +7,4 @@ frontend/.next
 frontend/node_modules
 frontend/build/*
 backend/*.log
+backend/venv
