@@ -5,6 +5,7 @@ import logging
 import pytz
 import pandas as pd
 import markdown
+from flask.logging import default_handler
 
 from src.db import Database, init_db
 from src.db.models import LogDeSolicitacao
@@ -29,9 +30,10 @@ VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
 app = Flask(__name__)
 
-# Usa o logger do Gunicorn
+# Usa o logger do Gunicorn em vez do logger padrão do Flask
 gunicorn_logger = logging.getLogger("gunicorn.error")
 app.logger.handlers.extend(gunicorn_logger.handlers)
+app.logger.handlers.remove(default_handler)
 app.logger.setLevel(logging.DEBUG)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
@@ -138,6 +140,11 @@ def webhook():
         whatsapp = WhatsApp(
             mensagem_recebida=request.json
         )
+        if not whatsapp.mensagem_recebida_eh_valida():
+            '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
+            app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
+            return 'ok', 200
+
         with Database() as db:
             professor = db.carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
             persona = PersonaBuilder()
