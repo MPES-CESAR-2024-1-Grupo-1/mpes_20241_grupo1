@@ -5,6 +5,7 @@ import logging
 import pytz
 import pandas as pd
 import markdown
+from flask.logging import default_handler
 
 from src.db import Database, init_db
 from src.db.models import LogDeSolicitacao
@@ -29,9 +30,10 @@ VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
 app = Flask(__name__)
 
-# Usa o logger do Gunicorn
+# Usa o logger do Gunicorn em vez do logger padrão do Flask
 gunicorn_logger = logging.getLogger("gunicorn.error")
 app.logger.handlers.extend(gunicorn_logger.handlers)
+app.logger.handlers.remove(default_handler)
 app.logger.setLevel(logging.DEBUG)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
