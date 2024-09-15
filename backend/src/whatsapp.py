@@ -17,8 +17,12 @@ class WhatsApp:
         self.api_url = f"https://graph.facebook.com/v18.0/{self.numero_de_telefone_do_assistente}/messages"
         current_app.logger.debug(f"[whatsapp] Mensagem recebida de {self.numero_de_telefone_do_professor}: {mensagem_recebida}")
 
+
     def texto_da_mensagem_recebida(self):
         return self.mensagem_recebida.get('text', {}).get('body', '')
+
+    def mensagem_recebida_eh_valida(self):
+        return self.texto_da_mensagem_recebida() != ''
 
     def __id_da_mensagem_recebida(self):
         return self.mensagem_recebida.get('id', '')

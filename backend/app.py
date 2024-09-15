@@ -140,6 +140,11 @@ def webhook():
         whatsapp = WhatsApp(
             mensagem_recebida=request.json
         )
+        if not whatsapp.mensagem_recebida_eh_valida():
+            '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
+            app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
+            return 'ok', 200
+
         with Database() as db:
             professor = db.carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
             persona = PersonaBuilder()
