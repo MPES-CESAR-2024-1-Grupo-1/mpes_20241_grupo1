@@ -16,15 +16,10 @@ class PersonaBuilder():
     def m_get_contexto(self):
         '''Retorna o contexto criado.'''
         txt_contexto = ""
-        for i, value in enumerate(self.context):
-
-            if i == 0:
-                txt_contexto = value
-                continue
-
-            if i == self.context.__len__() -1:
-                txt_contexto += " " + value + "."
-                continue
-            txt_contexto += ", " + value
-
+        for i, item_contexto in enumerate(self.context):
+            txt_contexto += item_contexto
+            if i < self.context.__len__() -1:
+                txt_contexto += ', '
+            elif i == self.context.__len__() -1:
+                txt_contexto += '.'
         return txt_contexto

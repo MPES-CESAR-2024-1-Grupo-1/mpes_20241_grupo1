@@ -2,33 +2,25 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
-import pytz
-import pandas as pd
 import markdown
 from flask.logging import default_handler
 
-from src.db import Database, init_db
-from src.db.models import LogDeSolicitacao
+from src.database import (
+    db,
+    init_database,
+    carrega_ou_cria_professor,
+    salva_log_de_solicitacao
+)
 from src.gpt.gpt_api import GptApi
-from src.gpt.EventHandler import EventHandler
 from src.persona.persona_builder import PersonaBuilder
 
-# PARA DEBUG APAGAR
-from src.gpt.model.professor import ModelProfessor
-from src.gpt.model.assistente import ModelAssistente
-from src.gpt.model.gpr_thread import ModelGptThread
-from src.gpt.model.metrica_uso import ModelMetricaUso
-from src.gpt.model.serie_ensino import ModelSerieEnsino
 from src.whatsapp import WhatsApp
-import os
-
-
-# Definindo o fuso horário de Brasília
-brasilia_tz = pytz.timezone('America/Sao_Paulo')
 
 VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
 app = Flask(__name__)
+
+init_database(app)
 
 # Usa o logger do Gunicorn em vez do logger padrão do Flask
 gunicorn_logger = logging.getLogger("gunicorn.error")
@@ -38,8 +30,6 @@ app.logger.setLevel(logging.DEBUG)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 CORS(app, resources={r"/*": {"origins": "*"}})
-
-init_db()
 
 
 @app.route('/')
@@ -51,7 +41,6 @@ def gpt_debug():
     # ROTA DE DEBUG
 
     return render_template("gpt.html", retorno="<h1>Rodou debug</h1>")
-
 
 
 # TESTE DE FORMULÁRIO
@@ -71,7 +60,6 @@ def m_receber_dados():
         retorno = gpt_api.m_conversa(persona=persona, pergunta=f"sobre {formulario['pergunta']}")
         retorno = markdown.markdown(retorno)
         return retorno
-
 
 
 @app.route('/gpt_assist')
@@ -96,35 +84,30 @@ def gpt_assist():
     return render_template("gpt.html", retorno=msg)
 
 
-
-
 @app.route('/gpt')
 def gpt_pergunta():
-    with Database() as db:
-        professor = db.carrega_ou_cria_professor('+5581982467019')
-        persona = PersonaBuilder()
-        persona.m_add_contexto_profissao(f"Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
-        persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
-        pergunta = request.args.get('pergunta', 'sobre Mauricio de Nassau')
-        gpt_api = GptApi()
-        retorno = gpt_api.m_conversa(persona=persona, pergunta=pergunta, formato_json=True)
-        db.salva_log_de_solicitacao(professor, retorno)
-        return render_template("gpt.html", retorno=markdown.markdown(retorno['resposta']))
-
+    professor = carrega_ou_cria_professor('+5581982467019')
+    persona = PersonaBuilder()
+    persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
+    persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
+    pergunta = f"sobre {request.args.get('pergunta', 'Mauricio de Nassau')}"
+    gpt_api = GptApi()
+    retorno = gpt_api.m_conversa(persona=persona, pergunta=pergunta, formato_json=True)
+    salva_log_de_solicitacao(professor, retorno)
+    db.session.commit()
+    return render_template("gpt.html", retorno=markdown.markdown(retorno['resposta']))
 
 
 @app.route('/teste_conn')
 def teste_criar_tb():
     query = "SELECT * FROM mpes.tb_teste;"
 
-    with Database() as db:
-        engine = db.engine
-        '''Deve se Implementado, nesta Versão!'''
-        df = engine.read_sql(query, engine)
-        print(df)
+    engine = db.engine
+    '''Deve se Implementado, nesta Versão!'''
+    df = engine.read_sql(query, engine)
+    print(df)
 
     return render_template('hello.html',  person= df.to_json())
-
 
 
 @app.route('/api/webhook', methods=['GET', 'POST'])
@@ -145,31 +128,18 @@ def webhook():
             app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
             return 'ok', 200
 
-        with Database() as db:
-            professor = db.carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
-            persona = PersonaBuilder()
-            persona.m_add_contexto_profissao(f"Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
-            persona.m_add_contexto_ambiente_or_tecnologias("receber material para realizar uma aula de 2 horas")
-            gpt_api = GptApi()
-            retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
-            whatsapp.marque_mensagem_como_lida()
-            whatsapp.responda_mensagem(retorno['resposta'])
-            db.salva_log_de_solicitacao(professor, retorno)
-            return 'ok', 200
-
-
+        professor = carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
+        persona = PersonaBuilder()
+        persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
+        persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
+        gpt_api = GptApi()
+        retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
+        whatsapp.marque_mensagem_como_lida()
+        whatsapp.responda_mensagem(retorno['resposta'])
+        salva_log_de_solicitacao(professor, retorno)
+        db.session.commit()
+        return 'ok', 200
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug= "--debug")
-
-
-
-
-
-
-# @app.route('/hello/')
-# @app.route('/hello/<name>')
-# def hello(name=None):
-#     return render_template('hello.html', person=name)
-
