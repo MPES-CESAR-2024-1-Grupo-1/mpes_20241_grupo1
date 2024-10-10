@@ -25,12 +25,12 @@ class GptApi():
     def m_conversa(self, persona: PersonaBuilder, pergunta: str, formato_json: bool=False):
         messages = [
             {"role": "system", "content": persona.m_get_contexto()},
-            {"role": "user", "content": pergunta}
         ]
         if formato_json:
             messages.extend([
                 { "role": "system", "content": MENSAGEM_PARA_FORMATAR_EM_JSON_COM_METADADOS}
             ])
+        messages.append({"role": "user", "content": pergunta})
         current_app.logger.debug(f"Enviando {[message['content'] for message in messages] } para GPT")
         completion = self.CLIENT.chat.completions.create(
             model             = self.OPENAI_MODELO,
