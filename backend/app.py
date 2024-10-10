@@ -127,14 +127,14 @@ def webhook():
             '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
             app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
             return 'ok', 200
-
+        whatsapp.marque_mensagem_como_lida()
+        whatsapp.responda_mensagem("Estamos preparando sua resposta...")
         professor = carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
         persona = PersonaBuilder()
         persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
         persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
         gpt_api = GptApi()
         retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
-        whatsapp.marque_mensagem_como_lida()
         whatsapp.responda_mensagem(retorno['resposta'])
         salva_log_de_solicitacao(professor, retorno)
         db.session.commit()
