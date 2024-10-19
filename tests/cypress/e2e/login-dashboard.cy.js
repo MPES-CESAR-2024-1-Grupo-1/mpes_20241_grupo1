@@ -15,7 +15,7 @@ describe('Login no dashboard', () => {
     cy.get("input[data-testid='data-testid Password input field']").type('admintestpass')
     cy.get("button[data-testid='data-testid Login button']").click()
     cy.url().should('include', '/dashboard/d/edxl2fbblo83ke/profzap')
-    cy.contains('Pesquisas Por Tema (classificado pelo GPT)').should('be.visible') // Assert that el is visible
+    cy.contains('Pesquisas Por Tema (classificado pelo GPT)').should('be.visible')
   })
 
 })
