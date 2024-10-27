@@ -121,7 +121,8 @@ def webhook():
 
     if request.method == 'POST':
         whatsapp = WhatsApp(
-            mensagem_recebida=request.json
+            mensagem_recebida=request.json,
+            logger=app.logger
         )
         if not whatsapp.mensagem_recebida_eh_valida():
             '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
