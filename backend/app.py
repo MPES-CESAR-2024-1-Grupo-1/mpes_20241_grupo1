@@ -34,7 +34,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
-    return '<h1>Api MPES 2024.1 Hello World! I have been seen times2.</h1>'
+    return render_template("landing.html")
 
 @app.route('/debug')
 def gpt_debug():
