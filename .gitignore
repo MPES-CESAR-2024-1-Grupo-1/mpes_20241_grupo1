@@ -9,3 +9,4 @@ frontend/build/*
 backend/*.log
 backend/venv
 **/*__pycache__*
+.idea
