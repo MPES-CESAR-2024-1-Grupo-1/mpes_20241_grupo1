@@ -47,5 +47,13 @@ footer {
   justify-content: center;
   @media(max-width: 720px) {
     flex-direction: column;
-    align-items: center;  }
+    align-items: center;
+  }
+
+  @media(max-width: 520px) {
+    display: block;
+    text-align: center;
+    align-items: center;
+    padding: 0 1rem;
+  }
 }
