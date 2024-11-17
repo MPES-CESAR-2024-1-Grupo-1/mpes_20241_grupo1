@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProfZap - Suporte a Docentes</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}?v={{assets_version}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -17,16 +17,16 @@
           <p>Uma ferramenta de suporte a docentes  do ensino básico - IA Generativa no Smartphone</p>
         </div>
         <div>
-          <img class="profzap" src="{{url_for('static', filename='img/Profzap.png')}}" alt="ProfZap Logo">
+          <img class="profzap" src="{{url_for('static', filename='img/Profzap.png')}}?v={{assets_version}}" alt="ProfZap Logo">
         </div>
     </div>
     <ul>
         <li>
-            <img src="{{url_for('static', filename='img/whatsapp.png')}}" alt="whatsapp Logo">
-            <span>Use seu aplicativo de mensagens do dia-a-dia para interagir com a plataforma.</span>
+            <img src="{{url_for('static', filename='img/whatsapp.png')}}?v={{assets_version}}" alt="whatsapp Logo">
+            <span>Use o seu aplicativo de mensagens do dia a dia para interagir com a plataforma.</span>
         </li>
         <li>
-            <img src="{{url_for('static', filename='img/document.png')}}" alt="whatsapp Logo">
+            <img src="{{url_for('static', filename='img/document.png')}}?v={{assets_version}}" alt="whatsapp Logo">
             <span>Crie planos de aula rapidamente apenas conversando com o assistente.</span>
         </li>
     </ul>

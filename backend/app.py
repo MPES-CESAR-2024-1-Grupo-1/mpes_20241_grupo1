@@ -15,6 +15,7 @@ from src.gpt.gpt_api import GptApi
 from src.persona.persona_builder import PersonaBuilder
 
 from src.whatsapp import WhatsApp
+import os
 
 VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
@@ -34,7 +35,10 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
-    return render_template("landing.html")
+    return render_template(
+        "landing.html",
+        assets_version=os.environ.get("HOSTNAME")
+    )
 
 @app.route('/debug')
 def gpt_debug():
