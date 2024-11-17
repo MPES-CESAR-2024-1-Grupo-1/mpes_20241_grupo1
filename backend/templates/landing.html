@@ -5,20 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProfZap - Suporte a Docentes</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <meta name="facebook-domain-verification" content="851xwhz5wadslc6zzz30bxjrwtpb8q" />
 </head>
 <body>
-    <div class="container">
+    <div class="top-container">
         <div>
           <h1>ProfZap</h1>
-          <p>Uma ferramenta de suporte a docentes</p>
+          <p>Uma ferramenta de suporte a docentes  do ensino básico - IA Generativa no Smartphone</p>
         </div>
         <div>
-          <img src="{{url_for('static', filename='img/Profzap.png')}}" alt="ProfZap Logo">
+          <img class="profzap" src="{{url_for('static', filename='img/Profzap.png')}}" alt="ProfZap Logo">
         </div>
     </div>
+    <ul>
+        <li>
+            <img src="{{url_for('static', filename='img/whatsapp.png')}}" alt="whatsapp Logo">
+            <span>Use seu aplicativo de mensagens do dia-a-dia para interagir com a plataforma.</span>
+        </li>
+        <li>
+            <img src="{{url_for('static', filename='img/document.png')}}" alt="whatsapp Logo">
+            <span>Crie planos de aula rapidamente apenas conversando com o assistente.</span>
+        </li>
+    </ul>
+    <div class="descricao">
+        <p class="descricao">
+            Com o ProfZap você usa o WhatsApp para interagir com nossa plataforma, trazendo maior comodidade e praticidade por não precisar instalar
+            novos aplicativos em seu Smartphone.
+            Você pode solicitar planos de aula informando o tema desejado, recebendo-o como mensagem de texto, reduzindo então a necessidade
+            do uso de grandes volumes de dados.
+        </p>
+        <p>
+            Este produto é um <i><strong>protótipo</strong></i>, criado como parte do curso de Mestrado em Engenharia de Software do CESAR School.
+            Portanto, ainda não possui caráter comercial.
+        </p>
+    </div>
     <footer>
-        Por JONATHAN HENRIQUE DE ARAUJO SILVA CONSULTORIA EM TECNOLOGIA DA INFORMACAO LTDA - 2024 - 41.635.631/0001-64
+        Por JONATHAN HENRIQUE DE ARAUJO SILVA CONSULTORIA EM TECNOLOGIA DA INFORMACAO LTDA - 2024 - 41.635.631/0001-64.Projeto da turma de Mestrado de Eng. de Software do CESAR school (2024.1).
         <span> - Mais info <a href="https://sites.google.com/cesar.school/iadocentes?usp=sharing" target="_blank">aqui</a></span>
     </footer>
 </body>
