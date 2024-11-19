@@ -15,7 +15,7 @@ class WhatsApp:
         self.mensagem_recebida = evento.get('messages', [{}])[0]
         self.numero_de_telefone_do_assistente = evento.get('metadata', {}).get('phone_number_id', '')
         self.numero_de_telefone_do_professor = self.mensagem_recebida.get('from', '')
-        self.api_url = f"https://graph.facebook.com/v18.0/{self.numero_de_telefone_do_assistente}/messages"
+        self.api_url = f"https://graph.facebook.com/v21.0/{self.numero_de_telefone_do_assistente}/messages"
         self.logger.debug(f"[whatsapp] Mensagem recebida de {self.numero_de_telefone_do_professor}: {mensagem_recebida}")
 
 
