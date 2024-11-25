@@ -20,7 +20,6 @@ import os
 VERIFY_TOKEN = 'J2CQMTcPDBXuwo7fi7svBoiF'
 
 app = Flask(__name__)
-
 init_database(app)
 
 # Usa o logger do Gunicorn em vez do logger padrão do Flask
@@ -133,7 +132,7 @@ def webhook():
             app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
             return 'ok', 200
         whatsapp.marque_mensagem_como_lida()
-        whatsapp.responda_mensagem("Estou preparando sua resposta...")
+        whatsapp.responda_mensagem("Estou preparando sua resposta 🤔")
         professor = carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
         persona = PersonaBuilder()
         persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
