@@ -15,10 +15,9 @@ class Assistente:
 
     """
     def __init__(self, repositorio_thread_openai: RepositorioThreadOpenai, logger: Logger):
-        id_assistente = os.environ.get('OPENAI_ASSISTANT_ID')
-        openai = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+        self.id_assistente = os.environ.get('OPENAI_ASSISTANT_ID')
+        self.openai = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
         self.logger = logger
-        self.__assistente = openai.beta.assistants.retrieve(assistant_id=id_assistente)
         self.repo_thread_openai = repositorio_thread_openai
 
 
@@ -43,7 +42,7 @@ class Assistente:
         )
         run = self.openai.beta.threads.runs.create_and_poll(
             thread_id=thread.id_openai,
-            assistant_id=self.assistente.id,
+            assistant_id=self.id_assistente,
             instructions=self.__instrucoes_professor(professor),
         )
         if run.status == "completed":
