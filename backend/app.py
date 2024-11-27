@@ -116,6 +116,30 @@ def teste_criar_tb():
 
     return render_template('hello.html',  person= df.to_json())
 
+@app.route('/get-assistente')
+def get_assistente():
+    from openai import OpenAI
+    import json
+
+    openai = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+    id_assistente = os.environ.get('OPENAI_ASSISTANT_ID')
+    thread_id = openai.beta.threads.create().id
+    openai.beta.threads.messages.create(
+        thread_id=thread_id, content=request.args.get("pergunta","Plano de aula sobre conjuntos numéricos"), role="user"
+    )
+    run = openai.beta.threads.runs.create_and_poll(
+        thread_id=thread_id,
+        assistant_id=id_assistente,
+        # instructions=self.__instrucoes_professor(professor),
+    )
+    if run.status == "completed":
+        respostas = openai.beta.threads.messages.list(
+            thread_id=thread_id,
+            extra_query={"run_id": run.id}
+        )
+        app.logger.debug(f"[assistente] Respostas: {respostas}")
+        return json.loads(respostas.data[0].content[0].text.value).get('respostas')
+
 """
 TODO:
 - implementar Assistente [assistente.open_ai.py]
@@ -151,10 +175,15 @@ def webhook():
         # repositorio_log_de_solicitacao.salva(professor, retorno)
         try:
             assistente = Assistente(repositorio_thread_openai=repositorio_thread_openai, logger=app.logger)
-            assistente.responda(mensagem=whatsapp.texto_da_mensagem_recebida(), professor=professor)
+            resultado = assistente.responda(mensagem=whatsapp.texto_da_mensagem_recebida(), professor=professor)
+            respostas = resultado.get('respostas', [])
+            for resposta in respostas:
+                whatsapp.responda_mensagem(resposta['texto'])
+            db.session.commit()
         except Exception as e:
             app.logger.error(f"Erro ao executar o Assistente: {e}")
-            db.session.commit()
+            import traceback
+            traceback.print_exc()
 
         return 'ok', 200
 

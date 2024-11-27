@@ -1,5 +1,5 @@
 from openai import OpenAI
-import os
+import os, json
 from logging import Logger
 
 from src.database import Professor
@@ -35,15 +35,14 @@ class Assistente:
             thread = self.repo_thread_openai.crie_thread(
                 professor=professor, openai_thread_id=self.openai.beta.threads.create().id
             )
-            self.logger.debug(f"[assistente] Nova thread criada {thread}")
-
+        self.logger.debug(f"[assistente] Usando Thread {thread}")
         self.openai.beta.threads.messages.create(
             thread_id=thread.id_openai, content=mensagem, role="user"
         )
         run = self.openai.beta.threads.runs.create_and_poll(
             thread_id=thread.id_openai,
             assistant_id=self.id_assistente,
-            instructions=self.__instrucoes_professor(professor),
+            additional_instructions=self.__instrucoes_professor(professor),
         )
         if run.status == "completed":
             respostas = self.openai.beta.threads.messages.list(
@@ -51,6 +50,7 @@ class Assistente:
                 extra_query={"run_id": run.id}
             )
             self.logger.debug(f"[assistente] Respostas: {respostas}")
+            return json.loads(respostas.data[0].content[0].text.value)
 
     def __instrucoes_professor(self, professor: Professor):
         instrucoes = ""

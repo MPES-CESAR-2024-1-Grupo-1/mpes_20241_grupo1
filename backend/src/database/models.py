@@ -9,10 +9,10 @@ class Base(DeclarativeBase):
 class Professor(Base):
     __tablename__ = 'professor'
 
-    nome: Mapped[str] = mapped_column(String(64))
+    nome: Mapped[str] = mapped_column(String(64), nullable=True)
     numero_de_telefone: Mapped[str] = mapped_column(String(64))
-    disciplina: Mapped[str] = mapped_column(String(64))
-    serie: Mapped[str] = mapped_column(String(64))
+    disciplina: Mapped[str] = mapped_column(String(64), nullable=True)
+    serie: Mapped[str] = mapped_column(String(64), nullable=True)
     logs_de_solicitacao: Mapped[List["LogDeSolicitacao"]] = relationship(back_populates="professor")
     threads_openai: Mapped[List["ThreadOpenAI"]] = relationship(back_populates="professor")
 
@@ -34,10 +34,13 @@ class ThreadOpenAI(Base):
 
     id_professor: Mapped[int] = mapped_column(ForeignKey('professor.id'))
     id_openai: Mapped[str] = mapped_column(String(128))
-    tema: Mapped[str] = mapped_column(String(128))
-    tipo: Mapped[str] = mapped_column(String(128))
+    tema: Mapped[str] = mapped_column(String(128), nullable=True)
+    tipo: Mapped[str] = mapped_column(String(128), nullable=True)
     timestamp_criacao = Column(DateTime(timezone=True), server_default=func.now())
     timestamp_ultima_interacao = Column(DateTime(timezone=True), server_default=func.now())
     professor: Mapped["Professor"] = relationship(back_populates="threads_openai")
+
+    def __repr__(self):
+        return f"ThreadOpenAI(id={self.id!r}, id_openai={self.id_openai!r}, id_professor={self.id_professor!r}, tema={self.tema!r}, tipo={self.tipo!r})"
 
 
