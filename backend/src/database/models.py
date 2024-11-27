@@ -14,7 +14,7 @@ class Professor(Base):
     disciplina: Mapped[str] = mapped_column(String(64))
     serie: Mapped[str] = mapped_column(String(64))
     logs_de_solicitacao: Mapped[List["LogDeSolicitacao"]] = relationship(back_populates="professor")
-    # threads_openai: Mapped[List["ThreadOpenAI"]] = relationship(back_populates="professor")
+    threads_openai: Mapped[List["ThreadOpenAI"]] = relationship(back_populates="professor")
 
     def __repr__(self):
         return f"Professor(id={self.id!r}, nome={self.nome!r}, numero de telefone={self.numero_de_telefone!r})"
@@ -29,12 +29,15 @@ class LogDeSolicitacao(Base):
     professor: Mapped["Professor"] = relationship(back_populates="logs_de_solicitacao")
 
 
-# class ThreadOpenAI(Base):
-#     __tablename__ = 'thread_openai'
-#
-#     id_professor: Mapped[int] = mapped_column(ForeignKey('professor.id'))
-#     timestamp_criacao = Column(DateTime(timezone=True), server_default=func.now())
-#     timestamp_interacao = Column(DateTime(timezone=True), server_default=func.now())
-#     professor: Mapped["Professor"] = relationship(back_populates="threads_openai")
+class ThreadOpenAI(Base):
+    __tablename__ = 'thread_openai'
+
+    id_professor: Mapped[int] = mapped_column(ForeignKey('professor.id'))
+    id_openai: Mapped[str] = mapped_column(String(128))
+    tema: Mapped[str] = mapped_column(String(128))
+    tipo: Mapped[str] = mapped_column(String(128))
+    timestamp_criacao = Column(DateTime(timezone=True), server_default=func.now())
+    timestamp_ultima_interacao = Column(DateTime(timezone=True), server_default=func.now())
+    professor: Mapped["Professor"] = relationship(back_populates="threads_openai")
 
 

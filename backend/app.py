@@ -8,9 +8,13 @@ from flask.logging import default_handler
 from src.database import (
     db,
     init_database,
-    carrega_ou_cria_professor,
-    salva_log_de_solicitacao
 )
+from src.database.repositorios import (
+    repositorio_professor,
+    repositorio_log_de_solicitacao,
+    repositorio_thread_openai
+)
+from src.assistente.open_ai import Assistente
 from src.gpt.gpt_api import GptApi
 from src.persona.persona_builder import PersonaBuilder
 
@@ -89,14 +93,14 @@ def gpt_assist():
 
 @app.route('/gpt')
 def gpt_pergunta():
-    professor = carrega_ou_cria_professor('+5581982467019')
+    professor = repositorio_professor.carrega_ou_cria('+5581982467019')
     persona = PersonaBuilder()
     persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
     persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
     pergunta = f"sobre {request.args.get('pergunta', 'Mauricio de Nassau')}"
     gpt_api = GptApi()
     retorno = gpt_api.m_conversa(persona=persona, pergunta=pergunta, formato_json=True)
-    salva_log_de_solicitacao(professor, retorno)
+    repositorio_log_de_solicitacao.salva(professor, retorno)
     db.session.commit()
     return render_template("gpt.html", retorno=markdown.markdown(retorno['resposta']))
 
@@ -112,7 +116,11 @@ def teste_criar_tb():
 
     return render_template('hello.html',  person= df.to_json())
 
-
+"""
+TODO:
+- implementar Assistente [assistente.open_ai.py]
+- alterar controller para usar assistente em vez de personaBuilder e gptApi
+"""
 @app.route('/api/webhook', methods=['GET', 'POST'])
 def webhook():
     # Resposta para validação de domínio feita pela Meta ao add um novo webhook
@@ -132,16 +140,22 @@ def webhook():
             app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
             return 'ok', 200
         whatsapp.marque_mensagem_como_lida()
-        whatsapp.responda_mensagem("Estou preparando sua resposta 🤔")
-        professor = carrega_ou_cria_professor(whatsapp.numero_de_telefone_do_professor)
-        persona = PersonaBuilder()
-        persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
-        persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
-        gpt_api = GptApi()
-        retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
-        whatsapp.responda_mensagem(retorno['resposta'])
-        salva_log_de_solicitacao(professor, retorno)
-        db.session.commit()
+        # whatsapp.responda_mensagem("Estou preparando sua resposta 🤔")
+        professor = repositorio_professor.carrega_ou_cria(whatsapp.numero_de_telefone_do_professor)
+        # persona = PersonaBuilder()
+        # persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
+        # persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
+        # gpt_api = GptApi()
+        # retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
+        # whatsapp.responda_mensagem(retorno['resposta'])
+        # repositorio_log_de_solicitacao.salva(professor, retorno)
+        try:
+            assistente = Assistente(repositorio_thread_openai=repositorio_thread_openai, logger=app.logger)
+            assistente.responda(mensagem=whatsapp.texto_da_mensagem_recebida(), professor=professor)
+        except Exception as e:
+            app.logger.error(f"Erro ao executar o Assistente: {e}")
+            db.session.commit()
+
         return 'ok', 200
 
 
