@@ -4,6 +4,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
 import markdown
 from flask.logging import default_handler
+import traceback
 
 from src.database import (
     db,
@@ -116,35 +117,7 @@ def teste_criar_tb():
 
     return render_template('hello.html',  person= df.to_json())
 
-@app.route('/get-assistente')
-def get_assistente():
-    from openai import OpenAI
-    import json
 
-    openai = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
-    id_assistente = os.environ.get('OPENAI_ASSISTANT_ID')
-    thread_id = openai.beta.threads.create().id
-    openai.beta.threads.messages.create(
-        thread_id=thread_id, content=request.args.get("pergunta","Plano de aula sobre conjuntos numéricos"), role="user"
-    )
-    run = openai.beta.threads.runs.create_and_poll(
-        thread_id=thread_id,
-        assistant_id=id_assistente,
-        # instructions=self.__instrucoes_professor(professor),
-    )
-    if run.status == "completed":
-        respostas = openai.beta.threads.messages.list(
-            thread_id=thread_id,
-            extra_query={"run_id": run.id}
-        )
-        app.logger.debug(f"[assistente] Respostas: {respostas}")
-        return json.loads(respostas.data[0].content[0].text.value).get('respostas')
-
-"""
-TODO:
-- implementar Assistente [assistente.open_ai.py]
-- alterar controller para usar assistente em vez de personaBuilder e gptApi
-"""
 @app.route('/api/webhook', methods=['GET', 'POST'])
 def webhook():
     # Resposta para validação de domínio feita pela Meta ao add um novo webhook
@@ -155,36 +128,35 @@ def webhook():
             return 'Validação falhou', 403
 
     if request.method == 'POST':
-        whatsapp = WhatsApp(
-            mensagem_recebida=request.json,
-            logger=app.logger
-        )
-        if not whatsapp.mensagem_recebida_eh_valida():
-            '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
-            app.logger.info("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
-            return 'ok', 200
-        whatsapp.marque_mensagem_como_lida()
-        # whatsapp.responda_mensagem("Estou preparando sua resposta 🤔")
-        professor = repositorio_professor.carrega_ou_cria(whatsapp.numero_de_telefone_do_professor)
-        # persona = PersonaBuilder()
-        # persona.m_add_contexto_profissao(f"Sou Professor de {professor.disciplina} da {professor.serie} do ensino fundamental do Brasil")
-        # persona.m_add_contexto_ambiente_or_tecnologias("crie um material para realizar uma aula de 2 horas")
-        # gpt_api = GptApi()
-        # retorno = gpt_api.m_conversa(persona=persona, pergunta=whatsapp.texto_da_mensagem_recebida(), formato_json=True)
-        # whatsapp.responda_mensagem(retorno['resposta'])
-        # repositorio_log_de_solicitacao.salva(professor, retorno)
         try:
-            assistente = Assistente(repositorio_thread_openai=repositorio_thread_openai, logger=app.logger)
+            whatsapp = WhatsApp(
+                mensagem_recebida=request.json,
+                logger=app.logger
+            )
+            if not whatsapp.mensagem_recebida_eh_valida():
+                '''whatsapp envia confirmações de envio e entrega das respostas enviadas. Podemos ignorar.'''
+                app.logger.debug("Mensagem recebida não é válida [Possívelmente delivery status]. Encerrando execução")
+                return 'ok', 200
+            whatsapp.marque_mensagem_como_lida()
+            professor = repositorio_professor.carrega_ou_cria(whatsapp.numero_de_telefone_do_professor)
+            assistente = Assistente(
+                repositorio_thread_openai=repositorio_thread_openai,
+                professor=professor,
+                logger=app.logger)
             resultado = assistente.responda(mensagem=whatsapp.texto_da_mensagem_recebida(), professor=professor)
-            respostas = resultado.get('respostas', [])
-            for resposta in respostas:
-                whatsapp.responda_mensagem(resposta['texto'])
+            if resultado.nome_professor and not professor.nome:
+                professor.nome = resultado.nome_professor
+            if resultado.disciplina_professor and not professor.disciplina:
+                professor.disciplina = resultado.disciplina_professor
+            if resultado.serie_professor and not professor.serie:
+                professor.serie = resultado.serie_professor
+            app.logger.debug(f"Professor após execução -> {professor}")
+            for textos in resultado.textos:
+                whatsapp.responda_mensagem(textos)
             db.session.commit()
         except Exception as e:
             app.logger.error(f"Erro ao executar o Assistente: {e}")
-            import traceback
             traceback.print_exc()
-
         return 'ok', 200
 
 

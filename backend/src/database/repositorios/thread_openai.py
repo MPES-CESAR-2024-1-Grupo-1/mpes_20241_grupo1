@@ -11,15 +11,19 @@ class RepositorioThreadOpenai(RepositorioBase):
             .from_statement(
                 text('''
                     SELECT * FROM thread_openai
-                     WHERE id_professor = :id_professor AND timestamp_ultima_interacao > :timestamp_atual - INTERVAL '5 minutes'
+                     WHERE id_professor = :id_professor 
+                        AND timestamp_ultima_interacao > :timestamp_atual - INTERVAL '5 minutes'
+                        AND finalizada = FALSE
                      ORDER BY timestamp_ultima_interacao DESC LIMIT 1
                  ''')
             ).params(id_professor=professor.id, timestamp_atual=datetime.now())
         )
 
-
     def crie_thread(self, professor, openai_thread_id):
         thread = ThreadOpenAI(id_professor=professor.id, id_openai=openai_thread_id)
+        return self.salve(thread)
+
+    def salve(self, thread):
         self.db.session.add(thread)
         return thread
 

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy import String, ForeignKey, DateTime, Column
+from sqlalchemy import String, ForeignKey, DateTime, Column, Boolean
 from sqlalchemy.sql import func
 from typing import List
 
@@ -36,6 +36,7 @@ class ThreadOpenAI(Base):
     id_openai: Mapped[str] = mapped_column(String(128))
     tema: Mapped[str] = mapped_column(String(128), nullable=True)
     tipo: Mapped[str] = mapped_column(String(128), nullable=True)
+    finalizada: Mapped[bool] = mapped_column(Boolean(), default=False)
     timestamp_criacao = Column(DateTime(timezone=True), server_default=func.now())
     timestamp_ultima_interacao = Column(DateTime(timezone=True), server_default=func.now())
     professor: Mapped["Professor"] = relationship(back_populates="threads_openai")
