@@ -2,6 +2,9 @@ from src.database.repositorios.base import RepositorioBase
 from src.database import db, ThreadOpenAI
 from sqlalchemy import select, text
 from datetime import datetime
+import os
+
+TEMPO_VALIDADE_THREAD = os.environ.get('TEMPO_VALIDADE_THREAD_EM_MINUTOS', 5)
 
 class RepositorioThreadOpenai(RepositorioBase):
 
@@ -9,10 +12,10 @@ class RepositorioThreadOpenai(RepositorioBase):
         return self.db.session.scalar(
             select(ThreadOpenAI)
             .from_statement(
-                text('''
+                text(f'''
                     SELECT * FROM thread_openai
                      WHERE id_professor = :id_professor 
-                        AND timestamp_ultima_interacao > :timestamp_atual - INTERVAL '5 minutes'
+                        AND timestamp_ultima_interacao > :timestamp_atual - INTERVAL '{TEMPO_VALIDADE_THREAD} minutes'
                         AND finalizada = FALSE
                      ORDER BY timestamp_ultima_interacao DESC LIMIT 1
                  ''')

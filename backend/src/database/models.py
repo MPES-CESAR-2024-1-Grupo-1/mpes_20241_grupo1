@@ -17,7 +17,7 @@ class Professor(Base):
     threads_openai: Mapped[List["ThreadOpenAI"]] = relationship(back_populates="professor")
 
     def __repr__(self):
-        return f"Professor(id={self.id!r}, nome={self.nome!r}, numero de telefone={self.numero_de_telefone!r})"
+        return f"Professor(id={self.id!r}, nome={self.nome!r}, numero de telefone={self.numero_de_telefone!r} disciplina={self.disciplina!r}, serie={self.serie!r})"
 
 
 class LogDeSolicitacao(Base):

@@ -50,10 +50,11 @@ class Assistente:
             thread = self.repo_thread_openai.crie_thread(
                 professor=professor, openai_thread_id=self.openai.beta.threads.create().id
             )
+        # TODO: mover instrucoes do professor para additional_instructions e validar se já funciona
         self.logger.debug(f"[assistente] Usando Thread {thread}")
+        msg_com_instrucoes_professor = f"{self.__instrucoes_professor(professor)}{mensagem}"
         self.openai.beta.threads.messages.create(
-            # TODO: mover instrucoes do professor para additional_instructions e validar se já funciona
-            thread_id=thread.id_openai, content=f"{self.__instrucoes_professor(professor)}{mensagem}", role="user"
+            thread_id=thread.id_openai, content=msg_com_instrucoes_professor, role="user"
         )
         run = self.openai.beta.threads.runs.create_and_poll(
             thread_id=thread.id_openai,
@@ -81,8 +82,6 @@ class Assistente:
         if resultado.avaliacao_comentario:
             thread.avaliacao_comentario = resultado.avaliacao_comentario
 
-        if resultado.avaliacao_nota and resultado.avaliacao_comentario:
-            thread.finalizada = True
         self.logger.debug(f"[assistente] thread após execução -> {thread}")
         self.repo_thread_openai.salve(thread)
 
