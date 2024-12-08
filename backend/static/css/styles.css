@@ -17,7 +17,7 @@ body {
   justify-content: start;
   align-items: center;
   min-height: 100vh;
-  background-color: #ffffff;
+  background: linear-gradient(180deg, rgba(47,1,29,0.25) 0%, rgba(255,255,255,1) 100%);
   gap: 8rem;
   font-size: 1.6rem;
   padding: 1.6rem 1.6rem 0.8rem;

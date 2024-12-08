@@ -1,0 +1,3 @@
+from .log_de_solicitacao import repositorio_log_de_solicitacao, RepositorioLogDeSolicitacao
+from .professor import repositorio_professor, RepositorioProfessor
+from .thread_openai import repositorio_thread_openai, RepositorioThreadOpenai

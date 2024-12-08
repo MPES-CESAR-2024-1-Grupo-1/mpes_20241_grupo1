@@ -1,9 +1,8 @@
-from sqlalchemy import select
 import os
 from dotenv import load_dotenv
-from .models import Base, Professor, LogDeSolicitacao
+from .models import Base, Professor, LogDeSolicitacao, ThreadOpenAI
 from flask_sqlalchemy import SQLAlchemy
-from flask import current_app
+
 from flask_migrate import Migrate
 
 load_dotenv("development.env")
@@ -17,27 +16,6 @@ __DB_URL = f'postgresql+psycopg2://{__PSQL_USER}:{__PSQL_PASS}@{__PSQL_HOST}:{__
 
 db = SQLAlchemy(model_class=Base)
 migrate = Migrate()
-
-def carrega_ou_cria_professor(numero_de_telefone) -> Professor:
-    query = select(Professor).where(Professor.numero_de_telefone == numero_de_telefone)
-    professor_do_banco = db.session.scalar(query)
-    if professor_do_banco:
-        return professor_do_banco
-    novo_professor = Professor(
-        nome=f"Professor Teste {numero_de_telefone}",
-        numero_de_telefone=numero_de_telefone,
-        disciplina="História",
-        serie="Quarta Série"
-    )
-    db.session.add(novo_professor)
-    return novo_professor
-
-def salva_log_de_solicitacao(professor: Professor, resposta):
-    tema = resposta.get('tema')
-    if tema:
-        professor.logs_de_solicitacao.append(LogDeSolicitacao(tema=tema))
-        db.session.add(professor)
-
 
 def init_database(flask_app):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = __DB_URL
